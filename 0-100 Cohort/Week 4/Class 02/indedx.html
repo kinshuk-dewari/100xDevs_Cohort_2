@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+    //let id = 1;
+    //function markAsDone(todoId){
+    //    const parent = document.getElementById(todoId);
+    //    parent.children[2].innerHTML = "Done !!"
+    //}
+    function populate(title,description,id){
+        const child = document.createElement("div");
+
+        const grandChild1 = document.createElement("div");
+        grandChild1.innerHTML = title;
+
+        const grandChild2 = document.createElement("div");
+        grandChild2.innerHTML = description;
+
+        const grandChild3 = document.createElement("button");
+        grandChild3.innerHTML = "Mark as Done";
+
+        grandChild3.setAttribute("onclick",`markAsDone(${id})`);
+
+        child.appendChild(grandChild1);
+        child.appendChild(grandChild2);
+        child.appendChild(grandChild3);
+        child.setAttribute("id",id);
+
+        return child;
+    }
+    //function addTodo(){
+    //    const title = document.getElementById("title").value;
+    //    const description = document.getElementById("description").value;
+    //    const parent = document.getElementById("todo");
+    //    
+    //    parent.appendChild(populate(title,description,id++));
+    //}
+    function updateDom(state){
+        const parent = document.getElementById("todo");
+        parent.innerHTML = "";
+        for(let i=0;i<state;i++){
+            const child = populate(state[i].title,state[i].description,state[i].id);
+            parent.appendChild(child);
+        }
+    }
+
+    window.setInterval(async function(){
+        const res = await fetch("https://sum-server.100x.devs.com/todos");
+        const json = await res.json();
+        updateDom(json.todos)
+    },5000)
+</script>
+<body>
+    <div>
+        <input type="text" id="title" placeholder="title"> <br>
+        <input type="text" id="description" placeholder="description"> <br>
+        <button onclick="updateDom()">Add Todo</button> <br>
+        <div id="todo"></div>
+    </div>
+    
+</body>
+</html>

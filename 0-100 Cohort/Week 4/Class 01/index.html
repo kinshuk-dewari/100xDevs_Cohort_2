@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+
+    // debouncing and throtlling 
+    // Debouncing ensures that a function doesn't fire repeatedly 
+    // as the event is triggered multiple times over a short period. 
+    // It delays the execution of the function until after a specified time period has passed since the last event. 
+    // This is useful for scenarios like search bars where you want to wait for the user to finish typing before triggering a search. 
+    
+    let timeout;
+    function debounce(){
+       // when debounce is called if existing clock is running stop it
+       // then restart the clock to stop the clock we use clearTimeout
+        clearTimeout(timeout);
+        timeout = setTimeout(function(){
+            sum1();
+        },1000);
+    }
+      
+    function sum1(){
+        const a = document.getElementById("a").value;
+        const b = document.getElementById("b").value;
+        
+        const result =  parseInt(a)+parseInt(b);
+        document.getElementById("sol").innerHTML = "sum is :"+result;
+    }
+
+    async function sum(){
+        const a = parseInt(document.getElementById("a").value);
+        const b = parseInt(document.getElementById("b").value);
+        const res = await fetch(`https://sum-server.100xdevs.com/sum?a=${a}&b=${b}`);
+        const data = await res.text();
+        document.getElementById("sol").innerHTML = data;
+    }
+</script>
+<body>
+
+    <input type="text" oninput="sum1()" placeholder="First number" id="a"> <br>
+    <input type="text" oninput="sum1()" placeholder="Second number" id="b"> <br>
+    <!-- <button onclick="sum()">Calculate sum</button> -->
+    <div id="sol"></div>
+
+</body>
+</html>

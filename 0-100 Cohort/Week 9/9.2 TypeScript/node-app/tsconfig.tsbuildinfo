@@ -1,0 +1,1 @@
+{"root":["./src/0_basics.ts","./src/1_basics.ts","./src/3_interface.ts","./src/4_implementing_interface.ts","./src/5_types.ts","./src/6_array.ts","./src/7_enums.ts","./src/8_generics.ts","./src/9_export_import.ts","./src/main.ts","./src/math.ts"],"version":"5.8.3"}
